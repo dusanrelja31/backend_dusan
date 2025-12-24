@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
           # Navigate to app directory
-          cd /var/www/flask_app
+          cd /var/www
           # Pull latest changes from GitHub
           git pull origin main
           # Install dependencies (if any changes)
