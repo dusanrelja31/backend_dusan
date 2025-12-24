@@ -19,7 +19,7 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-        script: |
+        script:
           # Navigate to app directory
           ssh ubuntu@172.31.22.128
           find / -type d -name ".git" 2>/dev/null
