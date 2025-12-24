@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
           # Navigate to app directory
-          # ssh ubuntu@172.31.22.128
+          # ssh ubuntu@3.27.130.243
           # find / -type d -name ".git" 2>/dev/null
           cd /home/ubuntu/backend_dusan
           # Pull latest changes from GitHub
