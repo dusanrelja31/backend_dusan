@@ -21,11 +21,11 @@ jobs:
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
           # Navigate to app directory
-          ssh ubuntu@172.31.22.128
-          find / -type d -name ".git" 2>/dev/null
-          cd /home/ubuntu/backend_dusan
+          # ssh ubuntu@172.31.22.128
+          # find / -type d -name ".git" 2>/dev/null
+          # cd /home/ubuntu/backend_dusan
           # Pull latest changes from GitHub
-          git pull
+          git clone https://github.com/dusanrelja31/backend_dusan.git
           # Install dependencies (if any changes)
           source venv/bin/activate
           pip install -r requirements.txt
