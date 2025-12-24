@@ -2,31 +2,56 @@ name: Deploy Flask App to EC2
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Deploy to EC2
-      uses: appleboy/ssh-action@v0.1.3
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-        script: |
-          # Navigate to app directory
-          cd /var/www/flask_app
-          # Pull latest changes from GitHub
-          git pull
-          # Install dependencies (if any changes)
-          pip install -r requirements.txt
-          # Restart the application service (e.g., Gunicorn via systemd)
-          sudo systemctl restart myflaskapp.service
-          # Check service status (optional)
-          sudo systemctl status myflaskapp.service
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          timeout: 60s
+          script: |
+            set -euxo pipefail
+
+            APP_DIR=/var/www/flask_app
+            PYTHON=/usr/bin/python3
+
+            echo "Go to app directory"
+            cd $APP_DIR
+
+            echo "Fix permissions"
+            sudo chown -R $USER:$USER $APP_DIR
+
+            echo "Pull latest code"
+            git fetch origin
+            git reset --hard origin/main
+
+            echo "Create venv if missing"
+            if [ ! -d "venv" ]; then
+              $PYTHON -m venv venv
+            fi
+
+            echo "Activate venv"
+            source venv/bin/activate
+
+            echo "Upgrade pip"
+            pip install --upgrade pip
+
+            echo "Install dependencies"
+            pip install -r requirements.txt
+
+            echo "Restart service"
+            sudo systemctl daemon-reexec
+            sudo systemctl restart myflaskapp.service
+
+            echo "Service status"
+            sudo systemctl --no-pager status myflaskapp.service
