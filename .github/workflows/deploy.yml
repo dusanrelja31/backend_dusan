@@ -1,4 +1,4 @@
-name: Deploy Flask App to EC2
+name: Deploy Flask to EC2
 
 on:
   push:
@@ -13,20 +13,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Deploy to EC2
-      uses: appleboy/ssh-action@v0.1.3
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
           # Navigate to app directory
-          cd /var/www/flask_app
+          cd /var/www/backend_dusan
           # Pull latest changes from GitHub
-          git pull
+          git pull origin main
           # Install dependencies (if any changes)
+          source venv/bin/activate
           pip install -r requirements.txt
           # Restart the application service (e.g., Gunicorn via systemd)
-          sudo systemctl restart myflaskapp.service
+          sudo systemctl restart backend_dusan.service
           # Check service status (optional)
-          sudo systemctl status myflaskapp.service
+          sudo systemctl status backend_dusan.service
