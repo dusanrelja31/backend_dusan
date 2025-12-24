@@ -23,7 +23,7 @@ jobs:
           # Navigate to app directory
           cd /home/ubuntu/backend_dusan
           # Pull latest changes from GitHub
-          git pull
+          git pull origin main
           # Install dependencies (if any changes)
           pip install -r requirements.txt
           # Restart the application service (e.g., Gunicorn via systemd)
