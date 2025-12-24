@@ -1,4 +1,4 @@
-name: Deploy Flask to EC2
+name: Deploy Flask App to EC2
 
 on:
   push:
@@ -10,36 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to EC2 via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-          command_timeout: 30m
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-          script: |
-            set -euxo pipefail
-
-            APP_DIR=/home/ubuntu/backend_dusan
-            PYTHON=/usr/bin/python3
-
-            cd $APP_DIR
-
-            echo "Reset repository to main"
-            git fetch origin
-            git reset --hard origin/main
-
-            echo "Create virtualenv if missing"
-            if [ ! -d venv ]; then
-              $PYTHON -m venv venv
-            fi
-
-            echo "Install dependencies using venv"
-            venv/bin/pip install --upgrade pip
-            venv/bin/pip install -r requirements.txt
-
-            echo "Restart systemd service"
-            sudo systemctl restart backend_dusan.service
-
-            echo "Deployment successful"
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        script: |
+          # Navigate to app directory
+          cd /home/ubuntu/backend_dusan
+          # Pull latest changes from GitHub
+          git pull
+          # Install dependencies (if any changes)
+          pip install -r requirements.txt
+          # Restart the application service (e.g., Gunicorn via systemd)
+          sudo systemctl restart backend_dusan.service
+          # Check service status (optional)
+          sudo systemctl status backend_dusan.service
