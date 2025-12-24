@@ -18,12 +18,16 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-          timeout: 60s
+          timeout: 300s
           script: |
             set -euxo pipefail
 
             APP_DIR=/var/www/flask_app
             PYTHON=/usr/bin/python3
+
+            echo "Update package list and install required packages"
+            sudo apt update
+            sudo apt install -y python3-venv python3-pip
 
             echo "Go to app directory"
             cd $APP_DIR
@@ -50,7 +54,6 @@ jobs:
             pip install -r requirements.txt
 
             echo "Restart service"
-            sudo systemctl daemon-reexec
             sudo systemctl restart myflaskapp.service
 
             echo "Service status"
