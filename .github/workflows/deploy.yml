@@ -12,7 +12,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+          
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -25,8 +25,8 @@ jobs:
           # Pull latest changes from GitHub
           git pull
           # Install dependencies (if any changes)
-          pip install -r requirements.txt
+          source venv/bin/activate
+          /var/www/backend_dusan/venv/bin/pip install -r requirements.txt
           # Restart the application service (e.g., Gunicorn via systemd)
           sudo systemctl restart backend_dusan.service
           # Check service status (optional)
-          sudo systemctl status backend_dusan.service
