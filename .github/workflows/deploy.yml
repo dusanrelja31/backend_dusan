@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
           # Navigate to app directory
-          cd /
+          cd /var/www/backend_dusan
           # Pull latest changes from GitHub
           git pull
           # Install dependencies (if any changes)
