@@ -23,7 +23,7 @@ jobs:
           # Navigate to app directory
           # ssh ubuntu@172.31.22.128
           # find / -type d -name ".git" 2>/dev/null
-          cd /var/www/backend_dusan
+          cd /home/ubuntu/backend_dusan
           # Pull latest changes from GitHub
           # git clone https://github.com/dusanrelja31/backend_dusan.git
           git pull origin main
