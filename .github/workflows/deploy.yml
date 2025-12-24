@@ -1,4 +1,4 @@
-asname: Deploy Flask to EC2
+name: Deploy Flask to EC2
 
 on:
   push:
