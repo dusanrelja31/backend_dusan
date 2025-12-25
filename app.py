@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    response = jsonify(name="You are welcome! I'm Server,please. xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    response = jsonify(name="You are welcome! I'm Server.")
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
