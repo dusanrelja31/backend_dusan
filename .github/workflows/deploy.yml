@@ -33,10 +33,9 @@ jobs:
           git pull origin main
           # Install dependencies (if any changes)
           python3 -m venv venv
+          /venv/bin/pip install -r requirements.txt
           source venv/bin/activate
-          /var/www/backend_dusan/venv/bin/pip install -r requirements.txt
           pip install --upgrade pip
-          pip install -r requirements.txt
           # Restart the application service (e.g., Gunicorn via systemd)
           sudo nano /etc/systemd/system/backend_dusan.service
           sudo systemctl restart backend_dusan.service
