@@ -35,12 +35,10 @@ jobs:
           
           # Install dependencies (if any changes)
           python3 -m venv venv
-          /venv/bin/pip install -r requirements.txt
           source venv/bin/activate
+          pip install -r requirements.txt
           
           # Restart the application service (e.g., Gunicorn via systemd)
-          sudo systemctl daemon-reload
-          sudo systemctl enable backend_dusan
           sudo nano /etc/systemd/system/backend_dusan.service
           sudo systemctl restart backend_dusan.service
           
