@@ -26,10 +26,11 @@ jobs:
           sudo apt install python3-venv -y
           
           # Navigate to app directory
-          git clone https://github.com/dusanrelja31/backend_dusan.git
-          cd /home/ubuntu/backend_dusan
+          cd /home/ubuntu/
           
           # Pull latest changes from GitHub
+          git clone https://github.com/dusanrelja31/backend_dusan.git
+          cd /home/ubuntu/backend_dusan
           git pull origin main
           
           # Install dependencies (if any changes)
