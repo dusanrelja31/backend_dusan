@@ -35,6 +35,7 @@ jobs:
           # Install dependencies (if any changes)
           python3 -m venv venv
           source /home/ubuntu/venv/bin/activate
+          if not exist requirements.txt type nul > requirements.txt
           pip install -r requirements.txt
           pip install gunicorn
 
