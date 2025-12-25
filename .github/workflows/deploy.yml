@@ -24,23 +24,24 @@ jobs:
         script: |
           sudo apt update
           sudo apt install -y python3-pip python3-venv
+          
           # Navigate to app directory
-          #/var/www/backend_dusan/venv/bin/pip install -r requirements.txt
           cd /home/ubuntu
-          git clone https://github.com/dusanrelja31/backend_dusan.git
+          
           # Pull latest changes from GitHub
+          git clone https://github.com/dusanrelja31/backend_dusan.git
           cd /home/ubuntu/backend_dusan
           git pull origin main
+          
           # Install dependencies (if any changes)
           python3 -m venv venv
           /venv/bin/pip install -r requirements.txt
           source venv/bin/activate
-          pip install --upgrade pip
+          
           # Restart the application service (e.g., Gunicorn via systemd)
-          sudo nano /etc/systemd/system/backend_dusan.service
-          sudo systemctl restart backend_dusan.service
           sudo systemctl daemon-reload
           sudo systemctl enable backend_dusan
-          sudo systemctl restart backend_dusan
+          sudo nano /etc/systemd/system/backend_dusan.service
+          sudo systemctl restart backend_dusan.service
           
           # Check service status (optional)
