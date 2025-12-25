@@ -22,8 +22,7 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
-          sudo apt update
-          sudo apt install -y python3-pip python3-venv
+          install -y python3-pip python3-venv
           
           # Navigate to app directory
           cd /home/ubuntu
@@ -35,10 +34,15 @@ jobs:
           
           # Install dependencies (if any changes)
           python3 -m venv venv
-          source /home/ubuntuvenv/bin/activate
-          cd /home/ubuntuvenv/bin/pip install -r requirements.txt
+          source /home/ubuntu/venv/bin/activate
+          pip install -r requirements.txt
+          pip install gunicorn
+
           
           # Restart the application service (e.g., Gunicorn via systemd)
+          sudo systemctl daemon-reload
+          sudo systemctl enable backend_dusan
+          sudo systemctl start backend_dusan
           sudo systemctl restart backend_dusan.service
           
           # Check service status (optional)
