@@ -22,15 +22,26 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
-          python3 install  
-          pip install
+          sudo apt update
+          sudo apt install -y python3-pip python3-venv
           # Navigate to app directory
-          cd /home/ubuntu/backend_dusan
+          #/var/www/backend_dusan/venv/bin/pip install -r requirements.txt
+          cd /home/ubuntu
+          git clone https://github.com/YOUR_USERNAME/backend_dusan.git
           # Pull latest changes from GitHub
-          git pull
+          cd /home/ubuntu/backend_dusan
+          git pull origin main
           # Install dependencies (if any changes)
+          python3 -m venv venv
           source venv/bin/activate
           /var/www/backend_dusan/venv/bin/pip install -r requirements.txt
+          pip install --upgrade pip
+          pip install -r requirements.txt
           # Restart the application service (e.g., Gunicorn via systemd)
+          sudo nano /etc/systemd/system/backend_dusan.service
           sudo systemctl restart backend_dusan.service
+          sudo systemctl daemon-reload
+          sudo systemctl enable backend_dusan
+          sudo systemctl restart backend_dusan
+          
           # Check service status (optional)
