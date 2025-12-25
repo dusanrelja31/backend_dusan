@@ -25,7 +25,8 @@ jobs:
           cd /home/ubuntu/backend_dusan
           
           # Pull latest changes from GitHub
-          git pull
+          git fetch origin
+          git reset --hard origin/main
         
           # Install dependencies (if any changes)
           source venv/bin/activate
