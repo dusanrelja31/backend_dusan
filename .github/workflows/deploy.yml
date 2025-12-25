@@ -39,7 +39,7 @@ jobs:
           /home/ubuntu/backend_dusan/venv/bin/pip install -r requirements.txt
           
           # Restart the application service (e.g., Gunicorn via systemd)
-          sudo systemctl restart backend_dusan.service
+          sudo systemctl restart /home/ubuntu/backend_dusan/etc/systemd/system/backend_dusan.service
           
           # Check service status (optional)
-          sudo systemctl restart backend_dusan
+          sudo systemctl restart /home/ubuntu/backend_dusan/etc/systemd/system/backend_dusan
