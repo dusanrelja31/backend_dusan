@@ -39,4 +39,4 @@ jobs:
           sudo systemctl restart backend_dusan.service
           
           # Check service status (optional)
-          sudo systemctl status myflaskapp.service
+          sudo systemctl status backend_dusan.service
