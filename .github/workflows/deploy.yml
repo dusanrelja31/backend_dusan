@@ -40,8 +40,8 @@ jobs:
           
           # Restart the application service (e.g., Gunicorn via systemd)
           sudo systemctl daemon-reload
-          sudo systemctl restart backend_dusan.server
-          sudo systemctl status backend_dusan --no-pager
+          sudo systemctl enable backend_dusan
+          sudo systemctl start backend_dusan
+          sudo systemctl restart backend_dusan.service
           
           # Check service status (optional)
-          sudo systemctl restart backend_dusan
