@@ -1,9 +1,6 @@
 from flask import Flask, jsonify
-from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
-
 
 @app.route("/")
 def hello_world():
@@ -12,5 +9,5 @@ def hello_world():
     return response
 
 if __name__ == '__main__':
-    # Run the app on port 8000
-    app.run(port=8000)
+    # Run the app on port 5000
+    app.run(host="0.0.0.0",port=5000)
