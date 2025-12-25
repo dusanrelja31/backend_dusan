@@ -36,7 +36,7 @@ jobs:
           curl ${{ secrets.EC2_HOST }}:8000
           /home/ubuntu/backend_dusan/venv/bin/pip install -r requirements.txt
           pip install gunicorn
-          flask run --host 0.0.0.0 --port 5000
+          flask run --host 0.0.0.0 --port 8000
           
           # Restart the application service (e.g., Gunicorn via systemd)
           sudo systemctl restart backend_dusan.service
