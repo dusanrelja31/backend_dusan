@@ -11,22 +11,31 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+      
 
+        
     - name: Deploy to EC2
-      uses: appleboy/ssh-action@v0.1.3
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
+          
           # Navigate to app directory
-          cd /var/www/flask_app
+          cd /home/ubuntu/backend_dusan
+          
           # Pull latest changes from GitHub
-          git pull
+          git pull origin main
+          make run
+          curl ${{ secrets.EC2_HOST }}:5000
           # Install dependencies (if any changes)
-          pip install -r requirements.txt
+          source venv/bin/activate
+          /home/ubuntu/backend_dusan/venv/bin/pip install -r requirements.txt
+          pip install gunicorn
+          
           # Restart the application service (e.g., Gunicorn via systemd)
-          sudo systemctl restart myflaskapp.service
+          sudo systemctl restart backend_dusan.service
+          
           # Check service status (optional)
-          sudo systemctl status myflaskapp.service
