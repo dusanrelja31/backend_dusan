@@ -29,6 +29,7 @@ jobs:
           # Pull latest changes from GitHub
           git pull origin main
           make run
+          flask run --port 5000
           curl ${{ secrets.EC2_HOST }}:5000
           # Install dependencies (if any changes)
           source venv/bin/activate
