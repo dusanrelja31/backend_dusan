@@ -28,7 +28,8 @@ jobs:
           
           # Pull latest changes from GitHub
           git pull origin main
-          
+          make run
+          curl ${{ secrets.EC2_HOST }}
           # Install dependencies (if any changes)
           source venv/bin/activate
           /home/ubuntu/backend_dusan/venv/bin/pip install -r requirements.txt
