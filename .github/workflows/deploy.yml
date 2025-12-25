@@ -26,7 +26,6 @@ jobs:
           sudo apt install -y python3-pip python3-venv
           
           # Navigate to app directory
-          cd /home/ubuntu
           
           # Pull latest changes from GitHub
           git clone https://github.com/dusanrelja31/backend_dusan.git
