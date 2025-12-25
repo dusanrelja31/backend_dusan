@@ -31,7 +31,7 @@ jobs:
           
           # Install dependencies (if any changes)
           source venv/bin/activate
-          /var/www/backend_dusan/venv/bin/pip install -r requirements.txt
+          /home/ubuntu/backend_dusan/venv/bin/pip install -r requirements.txt
           pip install gunicorn
           
           # Restart the application service (e.g., Gunicorn via systemd)
