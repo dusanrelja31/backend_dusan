@@ -31,16 +31,10 @@ jobs:
           
           # Install dependencies (if any changes)
           source venv/bin/activate
-          pip install -r requirements.txt
+          /var/www/backend_dusan/venv/bin/pip install -r requirements.txt
           pip install gunicorn
           
           # Restart the application service (e.g., Gunicorn via systemd)
-          sudo /etc/systemd/system/backend_dusan.service
-          sudo systemctl daemon-reload
-          sudo systemctl enable backend_dusan
-          sudo systemctl start backend_dusan
           sudo systemctl restart backend_dusan.service
-          sudo systemctl status backend_dusan
-          curl http://localhost:5000
           
           # Check service status (optional)
